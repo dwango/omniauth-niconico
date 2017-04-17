@@ -1,0 +1,14 @@
+build:
+  image: ruby:$$RUBY_VERSION
+  commands:
+    - gem install bundler
+    - bundle install --path vendor/bundle
+    - bundle exec rubocop
+    - bundle exec rake spec
+cache:
+  mount:
+    - vendor
+matrix:
+  RUBY_VERSION:
+    - 2.3.1
+    - 2.2.5
