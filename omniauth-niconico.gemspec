@@ -6,7 +6,7 @@ require 'omniauth/niconico/version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'omniauth-niconico'
-  spec.version       = Omniauth::Niconico::VERSION
+  spec.version       = OmniAuth::Niconico::VERSION
   spec.authors       = ['dwango']
   spec.email         = ['rubygems@dwango.co.jp']
   spec.summary       = 'Niconico OAuth2 Strategy for OmniAuth.'
