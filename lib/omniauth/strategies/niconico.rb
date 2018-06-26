@@ -1,6 +1,6 @@
-require 'omniauth/strategies/oauth2'
+require 'omniauth-oauth2'
 
-module Omniauth
+module OmniAuth
   module Strategies
     class Niconico < OmniAuth::Strategies::OAuth2
       option :name, 'niconico'
