@@ -8,7 +8,8 @@ module OmniAuth
       option :client_options,
              site: 'https://oauth.nicovideo.jp',
              authorize_url: '/oauth2/authorize',
-             token_url: '/oauth2/token'
+             token_url: '/oauth2/token',
+             credentials: nil
 
       uid { raw_info['userId'] }
 
@@ -27,6 +28,16 @@ module OmniAuth
         }
       end
 
+      def request_phase
+        set_options
+        super
+      end
+
+      def callback_phase
+        set_options
+        super
+      end
+
       def raw_info
         return @raw_info if @raw_info
         user = access_token.get('/v1/user.json').parsed
@@ -36,6 +47,22 @@ module OmniAuth
 
       def callback_url
         full_host + script_name + callback_path
+      end
+
+      private
+
+      def identifier
+        identifier_key = 'omniauth.niconico.identifier'
+        identifier = request.params['identifier'] || session[identifier_key]
+        session[identifier_key] = identifier unless identifier.nil?
+        identifier
+      end
+
+      def set_options
+        return unless identifier && options.credentials
+        client_id, client_secret = options.credentials.call(identifier)
+        options.client_id = client_id
+        options.client_secret = client_secret
       end
     end
   end
